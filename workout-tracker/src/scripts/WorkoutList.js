@@ -6,7 +6,7 @@ function WorkoutList({ workouts, deleteWorkout }) {
     <ul>
       {workouts.map((workout) => (
         <li key={workout.id}>
-          {workout.name} - {workout.duration} mins
+          {workout.name} - repetitions: {workout.repetitions}  - weight: {workout.weight} - rest duration: {workout.duration} mins
           <button onClick={() => deleteWorkout(workout.id)}>Delete</button>
         </li>
       ))}
