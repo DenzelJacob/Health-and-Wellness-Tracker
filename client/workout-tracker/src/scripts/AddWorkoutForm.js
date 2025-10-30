@@ -94,7 +94,7 @@ function AddWorkoutForm({ addWorkout,workouts, deleteWorkout, endWorkout }) {
         {showButton && <p>number of movements: {workouts.length}</p> }
       {workouts.map((workout) => (
         <li key={workout.id}>
-          {workout.name} -- repetitions: {workout.repetitions}  -- weight: {workout.weight} lbs -- rest duration: {workout.duration} seconds 
+          {workout.name} -- repetitions: {workout.repetitions}  -- weight: {workout.weight} lbs -- rest duration: {workout.duration} seconds --- {workout.id}
           <button onClick={() => deleteWorkout(workout.id)} >Delete</button>
         </li>
         
