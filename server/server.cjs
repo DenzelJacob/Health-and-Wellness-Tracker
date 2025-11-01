@@ -4,12 +4,9 @@ require('dotenv').config();
 const db_user = process.env.DB_USER;
 const db_pass = process.env.DB_PASS;
 
-console.log("DB User: "+db_user);
-
-
 const { MongoClient, ServerApiVersion } = require('mongodb');
 const uri = "mongodb+srv://"+db_user+":"+db_pass+"@workouttrackerserver1.xzkgao0.mongodb.net/?appName=workoutTrackerServer1";
-console.log("Mongo URI: "+uri);
+
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
   serverApi: {
