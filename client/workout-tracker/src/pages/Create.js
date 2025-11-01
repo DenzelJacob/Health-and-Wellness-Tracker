@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+//import { insertWorkout } from '../../../../server/server.cjs';
 
 import AddWorkoutForm from '../scripts/AddWorkoutForm.js';
 
@@ -21,6 +22,8 @@ function Create() {
     console.log("workout has ended")
     setWorkouts(workouts.filter((workout) => null));
     {/* make post request to mongodb */}
+      console.log(workouts);
+    //insertWorkout(workouts);// TODO- use express server to handle this
   }
  
 

@@ -1,2 +1,2 @@
-# Ignore a specific file named 'config.local.js'
-config.local.cjs
+# Ignore a specific file named '.env'
+.env
