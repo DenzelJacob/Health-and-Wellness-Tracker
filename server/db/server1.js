@@ -1,12 +1,10 @@
 
-const { default: e } = require('cors');
-require('dotenv').config();
-const db_user = process.env.DB_USER;
-const db_pass = process.env.DB_PASS;
+import { MongoClient, ServerApiVersion } from 'mongodb';
 
-const { MongoClient, ServerApiVersion } = require('mongodb');
-const uri = "mongodb+srv://"+db_user+":"+db_pass+"@workouttrackerserver1.xzkgao0.mongodb.net/?appName=workoutTrackerServer1";
 
+
+const uri = ATLAS_URI || "";
+console.log("MongoDB URI:", uri);
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
   serverApi: {
@@ -15,7 +13,7 @@ const client = new MongoClient(uri, {
     deprecationErrors: true,
   }
 });
-
+s
 async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)

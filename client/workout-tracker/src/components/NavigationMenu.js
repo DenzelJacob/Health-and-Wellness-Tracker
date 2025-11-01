@@ -3,15 +3,12 @@ import { Outlet, Link } from "react-router-dom";
 import'../css/NavigationMenu.css';
 var today = new Date();
 
-const Navbar = () => {
+export default function Navbar() {
     return (
     <div >
-        
- 
-        
-        
+                
         <div className="Navbar">
-            <h1 class = "date" >{today.toLocaleDateString('en-US')}</h1>
+            <h1 className = "date" >{today.toLocaleDateString('en-US')}</h1>
             <Link to="/"><button className="menuButton" type="button" >Home</button></Link>
             <Link to="/create"><button className="menuButton" type="button" >Create</button></Link>
             <Link to="/history"><button className="menuButton" type="button" >History</button></Link>
@@ -19,9 +16,8 @@ const Navbar = () => {
             
         </div>
 
-         <Outlet/>
-         
+        <Outlet/>
+          
     </div>
     )
 }
-export default Navbar;

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 //import { insertWorkout } from '../../../../server/server.cjs';
 
-import AddWorkoutForm from '../scripts/AddWorkoutForm.js';
+import AddWorkoutForm from '../components/AddWorkoutForm.jsx';
 
 
 

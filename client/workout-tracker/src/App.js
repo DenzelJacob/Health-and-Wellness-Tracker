@@ -16,13 +16,13 @@ function NavigationRouter() {
         <Route path='/' element={<Navbar/>} >
 
           <Route index element={<Home/>} />
-          <Route path='create' element={<Create/>} />
-          <Route path='history' element={<History/>} />
-          <Route path='profile' element={<Profile/>} />
-          <Route path='*' element={<NoPage/>} />
-
+          <Route path='/create' element={<Create/>} />
+          <Route path='/history' element={<History/>} />
+          <Route path='/profile' element={<Profile/>} />
+          <Route path='/*' element={<NoPage/>} />
         </Route>
-
+        
+        
       </Routes>
 
     
