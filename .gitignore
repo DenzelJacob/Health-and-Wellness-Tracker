@@ -1,2 +1,2 @@
 # Ignore a specific file named '.env'
-.env
+config.env
