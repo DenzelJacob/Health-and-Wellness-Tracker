@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './css/index.css';
 import reportWebVitals from './reportWebVitals.js';
 import  { BrowserRouter,Routes, Route, Outlet} from "react-router-dom";
-import Navbar from './components/NavigationMenu.js';
+import Navbar from './components/NavigationMenu.jsx';
 import Home from './pages/Home.js';
 import Create from './pages/Create.js';
 import NoPage from './pages/NoPageFound.js';

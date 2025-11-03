@@ -62,12 +62,6 @@ export default function AddWorkoutForm() {
     setReps('');
     setWeight('');
     setDuration('');
-
-
-    // fix not showing amoutn of exercises added
-    console.log("Current exercise list:", exerciseList); 
-
-
   };
 
     // make on click event -- TODO
@@ -126,7 +120,7 @@ export default function AddWorkoutForm() {
       console.log("updating existing workout POST:", workout);
       let response; 
       if (isNew) {
-        response = await fetch('http://localhost:5050/workouts/', {
+          response = await fetch('http://localhost:5050/workouts/', {
           method: 'POST',
           body: JSON.stringify(workout),
           headers: {
@@ -136,8 +130,8 @@ export default function AddWorkoutForm() {
 
         });
       } else {
-        console.log("updating existing workout PATCH");
-        response = await fetch(`http://localhost:5050/workouts/${params.id.toString()}`, {
+          console.log("updating existing workout PATCH");
+          response = await fetch(`http://localhost:5050/workouts/${params.id.toString()}`, {
           method: 'PATCH',
           body: JSON.stringify(workout),
           headers: {
@@ -150,7 +144,7 @@ export default function AddWorkoutForm() {
       throw new Error(`An error has occurred: ${response.status}`);
     }
   } catch (error) {
-    console.error(`A problen occurred with your fetch operation: ${error.message}`);
+    console.error(`A problem occurred with your fetch operation: ${error.message}`);
 
   } finally {
     setExerciseName('');
@@ -230,14 +224,17 @@ export default function AddWorkoutForm() {
     {showButton && exerciseList.length >0 && <p>Total exercises: {exerciseList.length}</p>}
 
     <ul>
-            
-      {exerciseList.map((movement) => (
+      
+      <div>
+        {exerciseList.map((movement) => (
         <li key = {movement.id}>
           {movement.exerciseName} -- sets: {movement.sets}--- repetitions: {movement.reps}  -- weight: {movement.weight} lbs -- rest duration: {movement.duration} seconds 
           <button onClick={() => deleteWorkout(movement.id)} >Delete</button>
         </li>
         
-      ))} 
+        ))} 
+      </div>
+     
 
       {showButton && exerciseList.length === 0 && <p>No exercises added yet.</p>}
       
