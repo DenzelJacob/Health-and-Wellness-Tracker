@@ -4,22 +4,89 @@ import { useParams, useNavigate } from 'react-router-dom';
 
 
 import '../css/workoutForm.css';
-//import { response } from 'express';
+
+
 
 export default function AddWorkoutForm() {
-  const [form, setForm] = useState({
-    name: '',
-    repetitions: '',
-    weight: '',
-    duration: '',
-  });
+  const [exerciseName, setExerciseName] = useState('');
+  const [sets, setSets] = useState('');
+  const [reps, setReps] = useState('');
+  const [weight, setWeight] = useState('');
+  const [duration, setDuration] = useState(''); //todo fix /// MAKE EVERYTHING SIMPLE and straightFORWARD
 
+  const [exerciseList, setExerciseList] = useState([]);// may change to data type
   const [isNew, setIsNew] = useState(true);
-  const params = useParams();// here TODOOOooooooooooooooooooooooooooo
+  const params = useParams()
   const navigate = useNavigate();
   const [showButton, setShowButton] = useState(false);
 
+  function deleteWorkout(id) {
+    setExerciseList((prevList) => prevList.filter((workout) => workout.id !== id));
+  }
+  
+  function endWorkout(form) {
+    console.log("workout has ended");
+    console.log(exerciseList);
+    //use async function to post to backend
+    onSubmit(form);
+    
+    setExerciseList([]); // clear list after submission
+  }
 
+
+
+
+   const handleChange = (e) => {
+     // fix this 
+      e.preventDefault();
+    
+    
+  };
+  
+  
+  
+  
+    const handleSubmit = (e) => {
+    e.preventDefault();
+    //const newWorkout = { , id: Date.now() }; // unique key /fix this
+    console.log("Adding workout:", exerciseName, sets, reps, weight, duration);
+    const newWorkout = { exerciseName, sets, reps, weight, duration, id: Date.now() }; // unique key 
+    
+    // Update the exercise list state
+    setExerciseList((prevList) => [...prevList, newWorkout]);
+    
+
+    // Clear inputs after submission
+    setExerciseName('');
+    setSets('');
+    setReps('');
+    setWeight('');
+    setDuration('');
+
+
+    // fix not showing amoutn of exercises added
+    console.log("Current exercise list:", exerciseList); 
+
+
+  };
+
+    // make on click event -- TODO
+  const onStartWorkoutEvent = (event) =>{
+      
+    console.log("Start worked was was clicked");
+    handleEndButtonState(true);
+    // Add exercise button -TODO
+    // make forms for different types of workouts ex: cardio vs resistance  
+  };
+
+
+  const handleEndButtonState = (state) => {
+    setShowButton(state);
+  };
+
+
+
+/*
   useEffect(() => {
     async function fetchData() {
       console.log(params.id);
@@ -49,14 +116,14 @@ export default function AddWorkoutForm() {
       fetchData();
       return;
     }, [params.id, navigate]);
+*/
 
 
-
-
-  async function onSubmit(e) {
-    e.preventDefault();
-    const workout = { ...form };
+  async function onSubmit() {
+    
+    const workout = { ...exerciseList };
     try {
+      console.log("updating existing workout POST:", workout);
       let response; 
       if (isNew) {
         response = await fetch('http://localhost:5050/workouts/', {
@@ -69,6 +136,7 @@ export default function AddWorkoutForm() {
 
         });
       } else {
+        console.log("updating existing workout PATCH");
         response = await fetch(`http://localhost:5050/workouts/${params.id.toString()}`, {
           method: 'PATCH',
           body: JSON.stringify(workout),
@@ -85,47 +153,21 @@ export default function AddWorkoutForm() {
     console.error(`A problen occurred with your fetch operation: ${error.message}`);
 
   } finally {
-    setForm({
-      name: '',
-      repetitions: '',
-      weight: '',
-      duration: '',
-    });
+    setExerciseName('');
+    setSets('');
+    setReps('');
+    setWeight('');
+    setDuration('');
 
-    navigate('/');
+    //navigate('/');
   }
  }
 
 
-
-  function updateFormFields(value){
-    return setForm((prev) => {
-      return{...prev, ...value};
-    });
-  }
-
-  const handleEndButtonState = (state) => {
-    setShowButton(state);
-
-
-    console.log("end was clicked " );
-  };
-
-  // make on click event -- TODO
-  const onStartWorkoutEvent = event =>{
-      
-    console.log("Start worked was was clicked");
-    handleEndButtonState(true);
-    // Add exercise button -TODO
-    // make forms for different types of workouts ex: cardio vs resistance  
-  };
-
-  
-
   // also title for workouts -- TODO
   return (
 
-     <form onSubmit={onSubmit}>
+     <form onSubmit={handleSubmit}> {/* prevent empty post*/}
       
       
       {!showButton && <button onClick={onStartWorkoutEvent}>Start Workout</button>}
@@ -137,25 +179,36 @@ export default function AddWorkoutForm() {
         <input
         type="text"
         placeholder="Workout Name"
-        defaultValue={"test"}
-        value={form.name}
-        onChange={(e) => updateFormFields({name: e.target.value})}
+        defaultValue={""}
+        value={exerciseName}
+        onChange={e => setExerciseName(e.target.value)}
         />
+
+        
+        <input
+        type="number"
+        placeholder="sets"
+        defaultValue={1}
+        value={sets}
+        onChange={e => setSets(e.target.value)}
+        />
+
 
         <input
         type='number'
         placeholder="repetitions"
         defaultValue={60}
-        value={form.repetitions}
-        onChange={(e) => updateFormFields({repetitions: e.target.value})}
+        value={reps}
+        onChange={e => setReps(e.target.value)}        
+
         />
 
         <input
         type = "number"
         placeholder="weight"
         defaultValue={60}
-        value={form.weight}
-        onChange={(e) => updateFormFields({weight: e.target.value})}
+        value={weight}
+        onChange={e => setWeight(e.target.value)}
         />
 
         <input
@@ -164,36 +217,37 @@ export default function AddWorkoutForm() {
         step={60}
         //default to 60  or 120 secs
         defaultValue={60}
-        value={form.duration}
-        onChange={(e) => updateFormFields({duration: e.target.value})}
+        value={duration}
+        onChange={e => setDuration(e.target.value)}
         />
 
         <button type="submit" >Add Workout</button>
       </div> }
 
       {showButton && <h1>Added exercises</h1>}
-    {
-/* 
+    
 
- <ul>
-        {showButton && <p>number of movements: {form.length}</p> }
-      {form.map((form) => (
-        <li key={form.id}>
-          {form.name} -- repetitions: {form.repetitions}  -- weight: {form.weight} lbs -- rest duration: {form.duration} seconds --- {form.id}
-          <button onClick={() => deleteWorkout(form.id)} >Delete</button>
+    {showButton && exerciseList.length >0 && <p>Total exercises: {exerciseList.length}</p>}
+
+    <ul>
+            
+      {exerciseList.map((movement) => (
+        <li key = {movement.id}>
+          {movement.exerciseName} -- sets: {movement.sets}--- repetitions: {movement.reps}  -- weight: {movement.weight} lbs -- rest duration: {movement.duration} seconds 
+          <button onClick={() => deleteWorkout(movement.id)} >Delete</button>
         </li>
         
-      ))}
+      ))} 
 
+      {showButton && exerciseList.length === 0 && <p>No exercises added yet.</p>}
+      
+      { (showButton && exerciseList.length > 0) && <button onClick={() => {endWorkout(exerciseList); handleEndButtonState(false);}}> End Workout </button> }
 
-   { showButton && <button onClick={() => {endWorkout(workouts); handleEndButtonState(false);}}> End Workout </button> }
     </ul>
+    
 
-*/
-
-
-    }  
-     
+    
+   
       
     </form>
   );

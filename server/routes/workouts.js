@@ -30,12 +30,15 @@ router.get("/:id", async (req, res) => {
 
 // This section will help you create a new record.
 router.post("/", async (req, res) => {
+    
   try {
+
+    console.log("Adding new workout:", req.body);
     let newDocument = {
-      name: req.body.name,
-      position: req.body.position,
-      level: req.body.level,
+      workout: req.body
     };
+
+
     let collection = await db.collection("workouts");
     let result = await collection.insertOne(newDocument);
     res.send(result).status(204);
@@ -52,8 +55,9 @@ router.patch("/:id", async (req, res) => {
     const updates = {
       $set: {
         name: req.body.name,
-        position: req.body.position,
-        level: req.body.level,
+        weight: req.body.weight,
+        repetitions: req.body.repetitions,
+        duration: req.body.duration,
       },
     };
 
