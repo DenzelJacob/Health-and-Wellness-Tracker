@@ -1,0 +1,12 @@
+@import url("./pallete.css");
+
+
+.workout-card{
+    border: 1px solid black;
+    width: 300px;
+    
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px;
+    background-color: var(--yinmn-blue);
+}

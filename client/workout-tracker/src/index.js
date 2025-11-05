@@ -1,16 +1,48 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './css/index.css';
-import NavigationRouter from './App';
-import reportWebVitals from './reportWebVitals';
-import { BrowserRouter } from 'react-router-dom';
+import reportWebVitals from './reportWebVitals.js';
+import  { BrowserRouter,Routes, Route, Outlet} from "react-router-dom";
+import Navbar from './components/NavigationMenu.jsx';
+import Home from './pages/Home.js';
+import Create from './pages/Create.js';
+import NoPage from './pages/NoPageFound.js';
+import History from './pages/History.js';
+import Profile from './pages/Profile.js';
+
+
+
+
+
+
+
+
+
+//           {<Route path='/create/:id' element={<Create/>} />}
+
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
 
     <BrowserRouter>
 
-      <NavigationRouter />
+        <Routes>
+        
+          <Route path='/' element={<Navbar/>} >
+
+          <Route index element={<Home/>} />
+          <Route path='/create' element={<Create/>} />
+
+          <Route path='/history' element={<History/>} />
+          <Route path='/profile' element={<Profile/>} />
+          <Route path='/*' element={<NoPage/>} />
+
+        </Route>
+        
+        
+      </Routes>
+      
 
     </BrowserRouter>
 
