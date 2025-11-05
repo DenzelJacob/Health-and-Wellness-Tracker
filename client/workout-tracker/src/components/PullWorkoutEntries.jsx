@@ -60,14 +60,14 @@ export default function PullWorkoutEntries() {
         // Display the fetched workout entries starting from the most recent
         <div>
             
-                {exerciseList.map((entry) => { //Big O(n^2) // maybe fix realistaically not an issue for small datasets
+                {exerciseList.reverse().map((entry) => { //Big O(n^2) // maybe fix realistaically not an issue for small datasets
 
                     // Convert the numeric-keyed object into an array
                     const exercises = Object.values(entry.workout);
-
+                    console.log("Rendering workout entry:", entry);
                     return (
                         <div key={entry._id} className="workout-card">
-                        <h3>Workout: {entry._id}</h3>
+                        <h3>Workout: {entry.workout[0].date}</h3>
 
                         {exercises.map((ex) => (
                             <div key={ex.id} className="exercise-item">

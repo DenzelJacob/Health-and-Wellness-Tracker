@@ -5,7 +5,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 
 import '../css/workoutForm.css';
 
-
+import { CurrentTime } from './NavigationMenu.jsx';
 
 export default function AddWorkoutForm() {
   const [exerciseName, setExerciseName] = useState('');
@@ -13,6 +13,7 @@ export default function AddWorkoutForm() {
   const [reps, setReps] = useState('');
   const [weight, setWeight] = useState('');
   const [duration, setDuration] = useState(''); //todo fix /// MAKE EVERYTHING SIMPLE and straightFORWARD
+  const [date, setDate] = useState(CurrentTime());
 
   const [exerciseList, setExerciseList] = useState([]);// may change to data type
   const [isNew, setIsNew] = useState(true);
@@ -50,7 +51,10 @@ export default function AddWorkoutForm() {
     e.preventDefault();
     //const newWorkout = { , id: Date.now() }; // unique key /fix this
     console.log("Adding workout:", exerciseName, sets, reps, weight, duration);
-    const newWorkout = { exerciseName, sets, reps, weight, duration, id: Date.now() }; // unique key 
+
+    //set date to current time
+    setDate(CurrentTime.currentTime); //todo fix sets time to last refresh
+    const newWorkout = { exerciseName, sets, reps, weight, duration, date}; //todo fix this
     
     // Update the exercise list state
     setExerciseList((prevList) => [...prevList, newWorkout]);
